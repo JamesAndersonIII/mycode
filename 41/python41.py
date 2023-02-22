@@ -26,6 +26,5 @@ char_stat = input("What statistic do you want to know about? (real name, powers,
 # Look up the requested value in the dictionary
 value = marvelchars[char_name][char_stat]
 
-# Print the result
-print(f"{char_name}'s {char_stat} is: {value}")
+# Print the result print(f"{char_name}'s {char_stat} is: {value}")
 main()
