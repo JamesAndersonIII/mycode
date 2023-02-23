@@ -15,7 +15,7 @@ def main():
     #TODO Add Potions and functionality. (Potions heal for 20 HP's)
     #TODO Make some functionality for the PythonBalls (Random catch chance, maybe make it easier to catch a Pythonmon if it is low on health)
     #TODO Make a inventory to house PythonBalls and Potions.
-    print("Choose your starting Pythonmon: Bulbasaur, Charmander, or Squirtle.")
+    print("Choose your starting Pythonmon: Bulbasaur (1), Charmander (2), or Squirtle (3).")
     while True:
         starter_pythonmon = input("> ").lower()
         if starter_pythonmon == "1" or starter_pythonmon == "bulbasaur":
@@ -28,7 +28,7 @@ def main():
             player_pythonmon = "Squirtle"
             break
         else:
-            print("Please choose Bulbasaur (1), Charmander(2), or Squirtle(3).")
+            print("Please choose Bulbasaur (1), Charmander (2), or Squirtle (3).")
 
     # Once the player has chosen their starting Pythonmon,
     # We initiate a battle with a wild Pythonmon (Pikachu).
@@ -52,6 +52,7 @@ def main():
         # We use a while loop to ensure the player enters a valid choice.
         #TODO Add skill usage called Power Points or PP per skill. (Tackle (10/10), then after you use it once Tackle (9/10))
         #TODO Add easy to use #'s for the skills like we did to select a starter.
+        #TODO Give each starter their own stats. (HP, Attack Power, Skills)
         print("Choose your move: Tackle or Growl.")
         while True:
             player_move = input("> ").lower()
