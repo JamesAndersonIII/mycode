@@ -1,5 +1,76 @@
 #!/usr/bin/env python3
 
+import time
+import random
+
+#Define the starter Pokemon classes.
+
+class Bulbasaur:
+    name = "Bulbasaur"
+    max_hp = 45
+    attack_power = 10
+    skills = {
+        "Tackle": {
+            "power": 10,
+            "pp": 10
+        },
+        "Growl": {
+            "power": 0,
+            "pp": 10
+        }
+    }
+
+class Charmander:
+    name = "Charmander"
+    max_hp = 39
+    attack_power = 12
+    skills = {
+        "Scratch": {
+            "power": 10,
+            "pp": 10
+        },
+        "Growl": {
+            "power": 0,
+            "pp": 10
+        }
+    }
+
+class Squirtle:
+    name = "Squirtle"
+    max_hp = 44
+    attack_power = 9
+    skills = {
+        "Tackle": {
+            "power": 10,
+            "pp": 10
+        },
+        "Tail Whip": {
+            "power": 0,
+            "pp": 10
+        }
+    }
+
+# Define the wild Pokemon classes
+class Pikachu:
+    name = "Pikachu"
+    max_hp = 35
+    attack_power = 8
+    skills = {
+        "Thundershock": {
+            "power": 10,
+            "pp": 10
+        }
+    }
+
+# Define the PythonBall class
+class PythonBall:
+    catch_rate = 0.5
+
+# Define the Potion class
+class Potion:
+    heal_amount = 20
+
+
 def main():
     # First, we ask the player for their name.
     # This will be used to personalize the game.
@@ -19,16 +90,20 @@ def main():
     while True:
         starter_pythonmon = input("> ").lower()
         if starter_pythonmon == "1" or starter_pythonmon == "bulbasaur":
-            player_pythonmon = "Bulbasaur"
+            player_pythonmon = Bulbasaur()
             break
         elif starter_pythonmon == "2" or starter_pythonmon == "charmander":
-            player_pythonmon = "Charmander"
+            player_pythonmon = Charmander()
             break
         elif starter_pythonmon == "3" or starter_pythonmon == "squirtle":
-            player_pythonmon = "Squirtle"
+            player_pythonmon = Squirtle()
             break
         else:
             print("Please choose Bulbasaur (1), Charmander (2), or Squirtle (3).")
+
+    # Give the user 5 PythonBalls and 10 Potions.
+    num_pythonballs = 5
+    num_potions = 10
 
     # Once the player has chosen their starting Pythonmon,
     # We initiate a battle with a wild Pythonmon (Pikachu).
@@ -37,62 +112,99 @@ def main():
     #TODO Figure out a way to implement critical attacks for both the user and wild_pythonmon.
     print(f"You have chosen {player_pythonmon} as your starting Pythonmon! Let's begin.")
     print("You have encountered a wild Pythonmon!")
-    wild_pythonmon = "Pikachu"
-    player_hp = 50
-    wild_hp = 50
-    wild_attack = 10
+   # wild_pythonmon = Pikachu()
+   # player_hp = player_pythonmon.max_hp
+   # wild_hp = wild_pythonmon.max_hp
 
     while player_hp > 0 and wild_hp > 0:
+        wild_pythonmon = Pikachu()
+        player_hp = player_pythonmon.max_hp
+        wild_hp = wild_pythonmon.max_hp
         # First, we print out the current HP of both Pythonmon.
-        print(f"{player_pythonmon}: {player_hp} HP")
-        print(f"{wild_pythonmon}: {wild_hp} HP")
+        print(f"{player_pythonmon.name}: {player_hp}/{player_pythonmon.max_hp} HP")
+        print(f"{wild_pythonmon.name}: {wild_hp}/{wild_pythonmon.max_hp} HP")
 
-        # Next, we prompt the player to choose their move.
-        # They can choose from Tackle or Growl.
-        # We use a while loop to ensure the player enters a valid choice.
-        #TODO Add skill usage called Power Points or PP per skill. (Tackle (10/10), then after you use it once Tackle (9/10))
-        #TODO Add easy to use #'s for the skills like we did to select a starter.
-        #TODO Give each starter their own stats. (HP, Attack Power, Skills)
-        print("Choose your move: Tackle or Growl.")
-        while True:
-            player_move = input("> ").lower()
-            if player_move == "tackle":
-                player_damage = 10
-                wild_hp -= player_damage
-                print(f"{player_pythonmon} used Tackle!")
+        # Prompt the player to choose their move.
+    while True:
+            print(f"What will you do?")
+            print("1. Fight")
+            print("2. Bag")
+            print("3. Pokemon")
+            print("4. Run")
+            player_choice = input("> ")
+            if player_choice == "1":
+                print(f"What move will {player_pythonmon.name} use?")
+                for i, skill_name in enumerate(player_pythonmon.skills):
+                    skill = player_pythonmon.skills[skill_name]
+                    print(f"{i + 1}. {skill_name} ({skill['pp']}/{skill['pp']})")
+                while True:
+                    skill_index = int(input("> ")) - 1
+                    if 0 <= skill_index < len(player_pythonmon.skills):
+                        skill_name = list(player_pythonmon.skills.keys())[skill_index]
+                        skill = player_pythonmon.skills[skill_name]
+                        if skill['pp'] > 0:
+                            skill['pp'] -= 1
+                            player_damage = skill['power'] + player_python
+                            wild_hp -= player_damage
+                print(f"{player_pythonmon.name} used {skill_name}!")
                 break
-            elif player_move == "growl":
-                print(f"{player_pythonmon} used Growl! {wild_pythonmon}'s Attack Power had been reduced by -3!")
-                wild_attack = max(1, wild_attack - 3)
-                break
+            elif player_choice == "2":
+                print("Which item will you use?")
+                print("1. PythonBall")
+                print("2. Potion")
+                item_choice = input("> ")
+                if item_choice == "1":
+                    if num_pythonballs == 0:
+                        print("You have no PythonBalls left!")
+                        continue
+                    num_pythonballs -= 1
+                    if random.random() <= PythonBall.catch_rate * (wild_hp / wild_pythonmon.max_hp):
+                        print(f"You caught {wild_pythonmon.name}!")
+                        break
+                    else:
+                        print(f"{wild_pythonmon.name} broke free!")
+                elif item_choice == "2":
+                    if num_potions == 0:
+                        print("You have no Potions left!")
+                        continue
+                    num_potions -= 1
+                    player_hp = min(player_hp + Potion.heal_amount, player_pythonmon.max_hp)
+                    print(f"{player_pythonmon.name} was healed for {Potion.heal_amount} HP!")
+                else:
+                    print("Please choose a valid item.")
+            elif player_choice == "3":
+                print(f"{player_pythonmon.name}: {player_hp}/{player_pythonmon.max_hp} HP")
+                print("Skills:")
+                for skill_name in player_pythonmon.skills:
+                    skill = player_pythonmon.skills[skill_name]
+                    print(f"{skill_name} ({skill['pp']}/{skill['pp']})")
+            elif player_choice == "4":
+                if random.random() <= 0.5:
+                    print("You escaped successfully!")
+                    break
+                else:
+                    print("You could not escape!")
             else:
-                print("Please choose Tackle or Growl.")
+                print("Please choose a valid option.")
 
-        # The wild Pythonmon's move is predetermined in this version of the game.
+        # The wild Pokemon's move is predetermined in this version of the game.
         # It will always use Thundershock.
         # We print out the move and calculate the damage.
-        #TODO Add more skills for Pikachu. (Quick Attack (5/5) wild_pythonmon attacks first always)
-        #TODO Add a randomly generated status effect to Thundershock called Paralyzed. (Thundershock has a 15% to Paralyze the starter_pythonmon which, makes the wild_pythonmon attack first.)
-        wild_move = "Thundershock"
-        print(f"{wild_pythonmon} used {wild_move}!")
-        wild_damage = wild_attack
-        player_hp -= wild_damage
+wild_skill_name = "Thundershock"
+print(f"Pikachu used {wild_skill_name}!")
+wild_skill = wild_pythonmon.skills[wild_skill_name]
+wild_damage = wild_skill['power'] + wild_pythonmon.attack_power
+player_hp -= wild_damage
 
-        # We add a delay of one second to make the game more immersive.
-        # This is done using the time module.
-        #Cool feature I found during my "too-late" night research.
-        import time
-        time.sleep(1)
+        # Add a delay of one second to make the game more immersive.
+time.sleep(1)
 
-    # Once the battle is over, we print out whether the player won or lost.
-    #TODO Add a option to capture Pikachu.
-    #TODO Add EXP???!!!! Add Levels????!!!!!!
-    if player_hp <= 0:
-        print(f"{player_pythonmon} fainted. You have no usable Pythonmon. You black out!")
-    else:
-        print(f"{wild_pythonmon} fainted. Congratulations, {player_name}! You'll be a Pythonmon Champion in no time!")
+# Once the battle is over, we print out whether the player won or lost.
+if player_hp <= 0:
+        print(f"{player_pythonmon.name} fainted. You have no usable Pythonmon. You black out!")
+else:
+        print(f"{wild_pythonmon.name} fainted. Congratulations, {player_name}! You'll be a Pythonmon Champion in no time!")
 
 if __name__ == "__main__":
     main()
-
 
